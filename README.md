@@ -15,6 +15,6 @@ Sequenced @ Garvan institute on
 
 ## Bioinformatics
 Demultiplexing performed as in document DEMUX
-Eager pipeline (v. aohigrho) using aDNA trim, sharding and mapping to phiX as per document eager.sh and document eager_input.tsv
+Eager pipeline (v. aohigrho) using aDNA trim, sharding and mapping to phiX as per document /scripts/eager_pipeline.sh and document /scripts/eager_input.tsv
 
 ### R
