@@ -1,1 +1,80 @@
+## Demux with GAII_15 (BCL2FASTQ2)
 
+[Header]
+IEMFileVersion,4
+Investigator Name,ACAD
+Experiment Name,FX_Shotgun
+Date,11/2/25
+Workflow,GenerateFASTQ
+,,,,,
+[Data]
+Lane,Sample_ID,Sample_Name,index_name,index
+2,index15,Widg_GAII_15,GAII_Indexing_15,CGACCTG
+1,index15,Widg_GAII_15,GAII_Indexing_15,CGACCTG
+
+
+RUNFOLDER="/gpfs/users/a1867445/Demu/241220_INO_BLlDLeVPeYSoSRa_WidgingarriFitzroyCrossingNewguinea2DingoShotgun"
+SAMPLESHEET="/gpfs/users/a1867445/Demu/SampleSheet_Widg.csv"
+OUTPUT_DIR="/gpfs/users/a1867445/Demu/Widg_demux_13Feb2025"
+MASKING="Y*,I7N3,N*,Y*"
+
+sbatch /hpcfs/groups/acad_users/shyrav/resources/bcl2fastq.sh -r ${RUNFOLDER} -s ${SAMPLESHEET} -o ${OUTPUT_DIR} -m ${MASKING}
+
+
+
+## Demux with individual library indexes
+
+concatenate lanes
+cat Widg_GAII_15_S1_L001_R1_001.fastq.gz Widg_GAII_15_S1_L002_R1_001.fastq.gz > Widg_GAII_15_S1_R1.fastq.gz
+cat Widg_GAII_15_S1_L001_R2_001.fastq.gz Widg_GAII_15_S1_L002_R2_001.fastq.gz > Widg_GAII_15_S1_R2.fastq.gz
+
+ml Singularity
+singularity exec -B /gpfs/ /hpcfs/groups/acad_users/shyrav/resources/singularity/nf-core-eager_2.4.5-sharding.sif \
+AdapterRemoval \
+--barcode-list ./Barcode_list.tsv \
+--adapter1 AGATCGGAAGAGCACACGTCTGAACTCCAGTCACNNNNNNATCTCGTATGCCGTCTTCTGCTTG \
+ --adapter2 AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT \
+ --file1 ./Widg_GAII_15_S1_R1.fastq.gz \
+ --file2 ./Widg_GAII_15_S1_R2.fastq.gz \
+ --basename Shotgun2025_ \
+ --barcode-mm-r1 1 \
+ --barcode-mm-r2 1 \
+ --threads 20 \
+ --demultiplex-only \
+ --gzip
+
+Barcode_list.tsv contains
+
+Seda24WidgLib_1	CAATTGC	CTCTGGA
+Seda24WidgLib_10	TTACAGT	GCTTCCA
+Seda24WidgLib_11	AACGCTA	TGAAGGC
+Seda24WidgLib_12	CCGTGAC	ATCCTTG
+Seda24WidgLib_13	CGCTGAG	ATCGATT
+Seda24WidgLib_14	GTGATCT	CAGTCAA
+Seda24WidgLib_15	TATCAGA	GCTAGCC
+Seda24WidgLib_16	ACAGCTC	TGACTGG
+Seda24WidgLib_17	ACGGTCT	CAATTGC
+Seda24WidgLib_18	CGTTAGA	GCCAATG
+Seda24WidgLib_19	GTAACTC	TGGCCAT
+Seda24WidgLib_2	GCCAATG	GAGATTC
+Seda24WidgLib_20	TACCGAG	ATTGGCA
+Seda24WidgLib_21	TACGTTC	CGATGTA
+Seda24WidgLib_22	ACGTAAG	GTCATAC
+Seda24WidgLib_23	AGTCTAT	GGAGTAC
+Seda24WidgLib_24	CGTACCT	TAGCACG
+Seda24WidgLib_3	TGGCCAT	TCTCAAG
+Seda24WidgLib_4	ATTGGCA	AGAGCCT
+Seda24WidgLib_5	CGATGTA	AGCATCA
+Seda24WidgLib_6	GTCATAC	CTGCAGC
+Seda24WidgLib_7	TAGCACG	GATGCTG
+Seda24WidgLib_8	ACTGCGT	TCATGAT
+Seda24WidgLib_9	GGTATCG	CAGGAAT
+Seda24WidgLibs_25	GTACGGA	ACTGCGT
+Seda24WidgLibs_26	CTACTCG	GGTATCG
+Seda24WidgLibs_27	GACGAGT	TTACAGT
+Seda24WidgLibs_28	TCGTCTA	AACGCTA
+Seda24WidgLibs_29	AGTAGAC	CCGTGAC
+Seda24WidgLibs_30	GGAGTAC	CGCTGAG
+Seda24WidgLibs_31	TTCTACG	GTGATCT
+Seda24WidgLibs_32	AAGACGT	TATCAGA
+Seda24WidgLibs_33	CCTCGTA	ACAGCTC
