@@ -1,11 +1,8 @@
 #!/bin/bash
-#SBATCH --mail-type=END
-#SBATCH --mail-type=FAIL
-#SBATCH --mail-user=a1867445@adelaide.edu.au
 
 module load Nextflow/21.03.0
 
-nextflow run /hpcfs/groups/acad_users/shyrav/resources/eager-v2.4.5-sharding-adna-trim-l25/ -c /hpcfs/users/a1867445/nextflow/phoenix.config \
+nextflow run /hpcfs/groups/acad_users/shyrav/resources/eager-v2.4.5-sharding-adna-trim-l25/ -c ./phoenix.config \
 	-with-singularity \
 	-profile singularity \
 	-resume \
@@ -26,16 +23,4 @@ nextflow run /hpcfs/groups/acad_users/shyrav/resources/eager-v2.4.5-sharding-adn
  	--run_bam_filtering \
 	--bam_mapping_quality_threshold 20 \
 	--bam_unmapped_type 'fastq' \
-	--dedupper markduplicates \
-	--run_metagenomic_screening \
-	--metagenomic_complexity_filter \
-	--metagenomic_tool 'malt' \
-	--database '/hpcfs/groups/acad_users/Sediments_shared/nt_2019Nov19_step3' \
-	--malt_min_support_mode 'percent' \
-  --malt_min_support_percent 85
-	
-## After malt run, add the following flags to the script and resume
-#--run_maltextract \
-	#--maltextract_taxon_list '/hpcfs/groups/acad_users/dawn/HOPS/taxa_list.txt'\
-	#--maltextract_ncbifiles '/hpcfs/groups/acad_users/dawn/HOPS' \
-	#--maltextract_destackingoff
+	--dedupper markduplicates 
