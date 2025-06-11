@@ -6,3 +6,9 @@ for l in ${Libraries}; do  sbatch -J malt_${l} -o $PWD/malt_${l}.log -D $PWD -N 
 
 ### meta comparison after MALT run
 singularity exec -B /gpfs/ /hpcfs/groups/acad_users/containers/megan_6.24.20--h9ee0642_0.sif compute-comparison -i /gpfs/users/a1867445/Widgingarri/malt_conda/*.rma6 -o /gpfs/users/a1867445/Widgingarri/malt_conda/Widg85samples.megan -n false
+
+
+### run HOPS
+sbatch -A strategic -p highmem --mem 600G run_hops.sh 
+
+
