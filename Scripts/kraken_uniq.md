@@ -8,7 +8,7 @@ bash krakenuniq.sh
 #!/bin/bash
 
 # Directory containing the FASTQ files
-FASTQ_DIR="/gpfs/users/a1867445/Cloggs_malt/lane_merged/"
+FASTQ_DIR="/gpfs/users/a1867445/Widgingarri/results/krakenUniq"
 
 # Find all FASTQ files in the specified directory
 FASTQ_FILES=$(find "$FASTQ_DIR" -type f -name "*.gz")
@@ -17,7 +17,7 @@ FASTQ_FILES=$(find "$FASTQ_DIR" -type f -name "*.gz")
 for FASTQ in $FASTQ_FILES; do
     PREFIX=$(basename "$FASTQ" .gz) # Strip .gz extension to use as prefix
 
-    sbatch -J krakenUniq_${PREFIX} -D /hpcfs/groups/acad_users/dawn/cloggs_lane_merged/krakenuni_nt -o /hpcfs/groups/acad_users/dawn/cloggs_lane_merged/krakenuni_nt/${PREFIX}_krakenUniq.out -N 1 -c 64 -p icelake \
+    sbatch -J krakenUniq_${PREFIX} -D /gpfs/users/a1867445/Widgingarri/results/krakenUniq -o /gpfs/users/a1867445/Widgingarri/results/krakenUniq/${PREFIX}_krakenUniq.out -N 1 -c 64 -p icelake \
         --mem=150GB --time=12:00:00 \
         --export DB=/hpcfs/groups/acad_users/Metagenomic_screening_db/KRAKENUNIQ_databases/KrakenUniq_database_based_on_full_NCBI_NT_from_December_2020/,fastq=${FASTQ},prefix=${PREFIX},SIZE=100,CPU=64 \
         kraken.sh
@@ -33,13 +33,13 @@ ml Singularity
 singularity exec -B /gpfs/ /hpcfs/groups/acad_users/containers/krakenuniq_1.0.4--pl5321h6dccd9a_1.sif krakenuniq --preload-size 100G --db /hpcfs/groups/acad_users/Metagenomic_screening_db/KRAKENUNIQ_databases/KrakenUniq_database_based_on_full_NCBI_NT_from_December_2020/ \
     --fastq-input ${FASTQ} \
     --threads 64 \
-    --output /gpfs/users/a1867445/Cloggs_May_2025/eager/krakenUniq/${PREFIX}.kraKenOut \
-    --report-file /gpfs/users/a1867445/Cloggs_May_2025/eager/krakenUniq/${PREFIX}.report \
+    --output /gpfs/users/a1867445/Widgingarri/results/krakenUniq/${PREFIX}.kraKenOut \
+    --report-file /gpfs/users/a1867445/Widgingarri/results/krakenUniq/${PREFIX}.report \
     --gzip-compressed --only-classified-out
 ```
 
 ```
-bash run_krakenuniq_processing.sh /gpfs/users/a1867445/Cloggs_May_2025/eager/krakenUniq/
+bash run_krakenuniq_processing.sh /gpfs/users/a1867445/Widgingarri/results/krakenUniq
 ```
 
 ### run_krakenuniq_processing.sh 
@@ -128,11 +128,11 @@ if(dim(ku_abundance)[1]>1 & dim(ku_abundance)[2]>1)
 
 ### Get full lineage from uniq IDs
 ```
-for tax in $(cat /gpfs/users/a1867445/Cloggs_May_2025/eager/krakenUniq/output/abundance/unique_species_taxid_list.txt); do grep -P "^$tax\s" /hpcfs/groups/acad_users/dawn/scripts/krakenuniq/fullnamelineage.dmp ; done | tee full_names_for_my_species.txt
+for tax in $(cat /gpfs/users/a1867445/Widgingarri/results/krakenUniq/output/abundance/unique_species_taxid_list.txt); do grep -P "^$tax\s" /hpcfs/groups/acad_users/dawn/scripts/krakenuniq/fullnamelineage.dmp ; done | tee full_names_for_my_species.txt
 ```
 ### get into order
 ```
-for species in $(tail -n+1 output/abundance/krakenuniq_abundance_matrix.txt | awk '{print $1;}'); do grep -P "^$species\s" full_names_for_my_species.txt ; done | awk -F'|' '{print $1","$2","$3}'  | sed 's/\t//g' > fullnames_same_order_as_matrix.csv
+for species in $(tail -n+1 ./output/abundance/krakenuniq_abundance_matrix.txt | awk '{print $1;}'); do grep -P "^$species\s" full_names_for_my_species.txt ; done | awk -F'|' '{print $1","$2","$3}'  | sed 's/\t//g' > fullnames_same_order_as_matrix.csv
 ```
 
 ##### fullnames_same_order_as_matrix.csv and krakenuniq_abundance_matrix can be merged manually if you want.
