@@ -135,4 +135,4 @@ for tax in $(cat /gpfs/users/a1867445/Cloggs_May_2025/eager/krakenUniq/output/ab
 for species in $(tail -n+1 output/abundance/krakenuniq_abundance_matrix.txt | awk '{print $1;}'); do grep -P "^$species\s" full_names_for_my_species.txt ; done | awk -F'|' '{print $1","$2","$3}'  | sed 's/\t//g' > fullnames_same_order_as_matrix.csv
 ```
 
-
+##### fullnames_same_order_as_matrix.csv and krakenuniq_abundance_matrix can be merged manually if you want.
