@@ -39,7 +39,7 @@ singularity exec -B /gpfs/ /hpcfs/groups/acad_users/containers/krakenuniq_1.0.4-
 ```
 
 ```
-bash run_krakenuniq_processing.sh
+bash run_krakenuniq_processing.sh /gpfs/users/a1867445/Cloggs_May_2025/eager/krakenUniq/
 ```
 
 ### run_krakenuniq_processing.sh 
