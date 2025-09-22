@@ -130,3 +130,9 @@ if(dim(ku_abundance)[1]>1 & dim(ku_abundance)[2]>1)
 ```
 for tax in $(cat /gpfs/users/a1867445/Cloggs_May_2025/eager/krakenUniq/output/abundance/unique_species_taxid_list.txt); do grep -P "^$tax\s" /hpcfs/groups/acad_users/dawn/scripts/krakenuniq/fullnamelineage.dmp ; done | tee full_names_for_my_species.txt
 ```
+### get into order
+```
+for species in $(tail -n+1 output/abundance/krakenuniq_abundance_matrix.txt | awk '{print $1;}'); do grep -P "^$species\s" fullnames_for_unique_taxa.list ; done | awk -F'|' '{print $1","$2","$3}'  | sed 's/\t//g' > fullnames_same_order_as_matrix.csv
+```
+
+
