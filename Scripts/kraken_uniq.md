@@ -1,5 +1,5 @@
 ### run_krakenuniq.sh
-
+```
 #!/bin/bash
 
 # Directory containing the FASTQ files
@@ -17,7 +17,7 @@ for FASTQ in $FASTQ_FILES; do
         --export DB=/hpcfs/groups/acad_users/Metagenomic_screening_db/KRAKENUNIQ_databases/KrakenUniq_database_based_on_full_NCBI_NT_from_December_2020/,fastq=${FASTQ},prefix=${PREFIX},SIZE=100,CPU=64 \
         kraken.sh
 done
-
+```
 
 ### kraken.sh
 #!/bin/bash
