@@ -20,6 +20,7 @@ done
 ```
 
 ### kraken.sh
+```
 #!/bin/bash
 
 ml Singularity
@@ -30,10 +31,11 @@ singularity exec -B /gpfs/ /hpcfs/groups/acad_users/containers/krakenuniq_1.0.4-
     --output /gpfs/users/a1867445/Cloggs_May_2025/eager/krakenUniq/${PREFIX}.kraKenOut \
     --report-file /gpfs/users/a1867445/Cloggs_May_2025/eager/krakenUniq/${PREFIX}.report \
     --gzip-compressed --only-classified-out
-
+```
 
 
 ### run_krakenuniq_processing.sh 
+```
 #!/bin/bash
 
 
@@ -56,3 +58,4 @@ module load R/4.3.1-foss-2021b
 
 Rscript /hpcfs/groups/acad_users/shyrav/projects/metagenomic_screening/krakenuniq/krakenuniq_abundances.R output/formatted ./output/abundance
 Rscript /hpcfs/groups/acad_users/shyrav/projects/metagenomic_screening/krakenuniq/plot_abundances.R ./output/abundance ./output/plots
+```
