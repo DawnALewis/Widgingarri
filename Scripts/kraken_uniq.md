@@ -69,6 +69,7 @@ Rscript /hpcfs/groups/acad_users/shyrav/projects/metagenomic_screening/krakenuni
 ```
 
 ### krakenuniq_abundances.R
+```
 #This is a script for plotting KrakenUniq abundance matrix.
 #Run this script as:
 #Rscript plot_krakenuniq_abundance_matrix.R in_dir out_dir
@@ -123,5 +124,6 @@ if(dim(ku_abundance)[1]>1 & dim(ku_abundance)[2]>1)
   pheatmap(ku_abundance, display_numbers=TRUE,fontsize=8,
            main="KrakenUniq Normalized Abundance",cluster_rows=FALSE,cluster_cols=FALSE,number_format="%.3f",breaks=c(0,1))
 }
+```
 
 ###
