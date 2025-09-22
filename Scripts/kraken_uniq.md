@@ -1,3 +1,8 @@
+
+```
+bash krakenuniq.sh
+```
+
 ### run_krakenuniq.sh
 ```
 #!/bin/bash
