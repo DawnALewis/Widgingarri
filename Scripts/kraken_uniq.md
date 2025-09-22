@@ -132,7 +132,7 @@ for tax in $(cat /gpfs/users/a1867445/Cloggs_May_2025/eager/krakenUniq/output/ab
 ```
 ### get into order
 ```
-for species in $(tail -n+1 output/abundance/krakenuniq_abundance_matrix.txt | awk '{print $1;}'); do grep -P "^$species\s" fullnames_for_unique_taxa.list ; done | awk -F'|' '{print $1","$2","$3}'  | sed 's/\t//g' > fullnames_same_order_as_matrix.csv
+for species in $(tail -n+1 output/abundance/krakenuniq_abundance_matrix.txt | awk '{print $1;}'); do grep -P "^$species\s" full_names_for_my_species.txt ; done | awk -F'|' '{print $1","$2","$3}'  | sed 's/\t//g' > fullnames_same_order_as_matrix.csv
 ```
 
 
