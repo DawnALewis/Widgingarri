@@ -25,7 +25,40 @@ singularity exec -B malt-run.vmoptions:/usr/local/opt/malt-0.61/malt-run.vmoptio
 ```
 singularity exec -B /gpfs/ /hpcfs/groups/acad_users/containers/megan_6.24.20--h9ee0642_0.sif compute-comparison -i /gpfs/users/a1867445/Widgingarri/results/metagenomic_classification/malt/*.rma6 -o /gpfs/users/a1867445/Widgingarri/results/metagenomic_classification/malt/Widg85samples.megan -n false
 ```
+### To make an extensive taxa list for HOPS
+find_unique_taxa.sh 
+```
+#!/bin/bash
 
+# Define input directory and output file
+INPUT_DIR="/gpfs/users/a1867445/Widgingarri/results/metagenomic_classification/malt"
+OUTPUT_FILE="widgingarri_unique_taxa.txt"
+TEMP_FILE="all_taxa_temp.txt"
+
+# Remove previous output files if they exist
+rm -f $OUTPUT_FILE $TEMP_FILE
+
+# Loop through all .rma6 files in the directory
+for file in "$INPUT_DIR"/*.rma6; do
+    echo "Processing: $file"
+    
+    # Extract sample name (removing the path and extension)
+    sample_name=$(basename "$file" .unmapped.fastq.gz_lowcomplexityremoved.rma6)
+
+    # Run MEGAN's rma2info to extract taxonomy classifications
+    singularity exec -B /gpfs/ /hpcfs/groups/acad_users/containers/megan_6.24.20--h9ee0642_0.sif \
+    rma2info -i "$file" -r2c Taxonomy -n >> "$TEMP_FILE"
+
+done
+
+# Extract only unique taxa
+sort "$TEMP_FILE" | uniq > "$OUTPUT_FILE"
+
+# Remove temporary file
+rm -f "$TEMP_FILE"
+
+echo "Unique taxa saved in: $OUTPUT_FILE"
+```
 ### run HOPS
 ```
 sbatch -A strategic -p highmem --mem 600G run_hops.sh
