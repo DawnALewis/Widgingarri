@@ -8,7 +8,7 @@ bash kraken.sh
 #!/bin/bash
 
 # Directory containing the FASTQ files
-FASTQ_DIR="/gpfs/users/a1867445/Widgingarri/results/krakenUniq"
+FASTQ_DIR="/gpfs/users/a1867445/Widgingarri/results/aDNA_trim/"
 
 # Find all FASTQ files in the specified directory
 FASTQ_FILES=$(find "$FASTQ_DIR" -type f -name "*.gz")
