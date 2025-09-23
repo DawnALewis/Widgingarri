@@ -1,8 +1,11 @@
 To run MALT in the eager pipeline, you need a taxon list (likely due to primary use in pathogen studies). Widgingarri did not have any target taxa so I ran Eager per Eager_pipeline.sh and ran malt the unmapped, post-filtering (low complexity removed) libraries through MALT alignment in the following way:
 
 ##### Metagenomic alignment after deduplication through eager pipeline
+run_malt.sh
 ```
-sbatch -J malt_${l} -o $PWD/malt_${l}.log -D $PWD -N 1 -A strategic -p highmem  --mem=1200G -c 72 --time=72:00:00 malt.sh 
+for l in /gpfs/users/a1867445/Widgingarri/results/metagenomic_complexity_filter/*.gz; do
+sbatch -J malt_${l} -o $PWD/malt_${l}.log -D $PWD -N 1 -A strategic -p highmem  --mem=1200G -c 72 --time=72:00:00 malt.sh
+done
 ```
 ```
 #!/bin/bash
@@ -13,9 +16,9 @@ sbatch -J malt_${l} -o $PWD/malt_${l}.log -D $PWD -N 1 -A strategic -p highmem  
 #SBATCH --mail-user=dawn.lewis@adelaide.edu.au 
 
 ml Singularity
-for l in /gpfs/users/a1867445/Widgingarri/results/metagenomic_complexity_filter/*.gz; do
+
 singularity exec -B /gpfs/ /hpcfs/groups/acad_users/containers/nf-core-eager_2.4.5-sharding.sif malt-run -i ${l} --index /hpcfs/groups/acad_users/Metagenomic_screening_db/malt_nt_2019Nov19_step3/ -o /gpfs/users/a1867445/Widgingarri/results/metagenomic_classification/malt/ -at SemiGlobal -mem load --mode BlastN --alignments /gpfs/users/a1867445/Widgingarri/results/metagenomic_classification/malt/test/alignments/ --format SAM -t 72 -v -mpi 85 -wlca -supp 0.001 -lcp 80
-done
+
 ```
 
 
