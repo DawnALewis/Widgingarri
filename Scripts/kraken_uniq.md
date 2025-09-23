@@ -1,9 +1,9 @@
 
 ```
-bash krakenuniq.sh
+bash kraken.sh
 ```
 
-### run_krakenuniq.sh
+### run_kraken.sh
 ```
 #!/bin/bash
 
