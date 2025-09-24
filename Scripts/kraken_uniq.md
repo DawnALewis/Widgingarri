@@ -15,7 +15,7 @@ FASTQ_FILES=$(find "$FASTQ_DIR" -type f -name "*.gz")
 
 # Loop over each FASTQ file
 for FASTQ in $FASTQ_FILES; do
-    PREFIX=$(basename "$FASTQ" .gz) # Strip .gz extension to use as prefix
+    PREFIX=$(basename "$FASTQ" | sed -E 's/^Shotgun2025_\.//; s/\.pair[12]\.fastq\.pG\.fq_L1\.adna_trim\.fastq\.gz$//')
 
     sbatch -J krakenUniq_${PREFIX} -D /gpfs/users/a1867445/Widgingarri/results/krakenUniq -o /gpfs/users/a1867445/Widgingarri/results/krakenUniq/${PREFIX}_krakenUniq.out -N 1 -c 64 -p icelake \
         --mem=150GB --time=12:00:00 \
@@ -35,7 +35,7 @@ singularity exec -B /gpfs/ /hpcfs/groups/acad_users/containers/krakenuniq_1.0.4-
     --threads 64 \
     --output /gpfs/users/a1867445/Widgingarri/results/krakenUniq/${PREFIX}.kraKenOut \
     --report-file /gpfs/users/a1867445/Widgingarri/results/krakenUniq/${PREFIX}.report \
-    --gzip-compressed --only-classified-out
+    --gzip-compressed --only-classified-output
 ```
 
 ```
