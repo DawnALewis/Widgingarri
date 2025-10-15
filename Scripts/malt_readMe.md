@@ -7,6 +7,7 @@ for l in /gpfs/users/a1867445/Widgingarri/results/metagenomic_complexity_filter/
 sbatch -J malt_${l} -o $PWD/malt_${l}.log -D $PWD -N 1 -A strategic -p highmem  --mem=1200G -c 72 --time=72:00:00 malt.sh
 done
 ```
+malt.sh
 ```
 #!/bin/bash
 
@@ -20,7 +21,8 @@ ml Singularity
 singularity exec -B /gpfs/ /hpcfs/groups/acad_users/containers/nf-core-eager_2.4.5-sharding.sif malt-run -i ${l} --index /hpcfs/groups/acad_users/Metagenomic_screening_db/malt_nt_2019Nov19_step3/ -o /gpfs/users/a1867445/Widgingarri/results/metagenomic_classification/malt/ -at SemiGlobal -mem load --mode BlastN --alignments /gpfs/users/a1867445/Widgingarri/results/metagenomic_classification/malt/test/alignments/ --format SAM -t 72 -v -mpi 85 -wlca -supp 0.001 -lcp 80
 
 ```
-
+change the LCA parameters with malt alignments
+```
 
 ### meta comparison after MALT run
 ```
