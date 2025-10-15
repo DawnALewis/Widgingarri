@@ -23,7 +23,7 @@ singularity exec -B /gpfs/ /hpcfs/groups/acad_users/containers/nf-core-eager_2.4
 ```
 change the LCA parameters with malt alignments
 ```
-
+```
 ### meta comparison after MALT run
 ```
 singularity exec -B /gpfs/ /hpcfs/groups/acad_users/containers/megan_6.24.20--h9ee0642_0.sif compute-comparison -i /gpfs/users/a1867445/Widgingarri/results/metagenomic_classification/malt/*.rma6 -o /gpfs/users/a1867445/Widgingarri/results/metagenomic_classification/malt/Widg85samples.megan -n false
