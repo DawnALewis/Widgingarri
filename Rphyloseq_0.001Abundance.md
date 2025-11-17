@@ -461,7 +461,6 @@ family_cols <- c(
   "Desulfurococcaceae"="#8B176C",
   "Acidilobaceae"="#8C125B",
   "Methanopyraceae"="#8A154B",
-  ## Eukaryotes
   "Glomeraceae"="#7D2C3E",
   "Moraceae"="#6C3A33",
   "Phaffomycetaceae"="#58462A",
