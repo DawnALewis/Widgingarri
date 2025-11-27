@@ -1,0 +1,77 @@
+## First convert BCL to fastq if not already using the GAII indexes
+# Untar BCL files
+gunzip  <file.tar.gz>
+tar -xvf <file.tar.gz>
+
+######demultiplex by GAII_X indexes
+module use /apps/modules/all
+module load bcl2fastq2/2.19.1
+
+#First Lane
+bcl2fastq -R ./221115_A01520_0111_AHGMT7DMXY-lane1.tar.gz \
+--sample-sheet=../SampleSheet_singleIndex_samples.csv \
+--ignore-missing-positions --ignore-missing-controls \
+--ignore-missing-filter --ignore-missing-bcls \
+--output-dir=Demux_lane1
+
+
+#First Lane
+bcl2fastq -R ./DirectoryWithBCLs/lane2 \
+--sample-sheet=./<SampleSheet_singleIndex_samples.csv> \
+--ignore-missing-positions --ignore-missing-controls \
+--ignore-missing-filter --ignore-missing-bcls \
+--output-dir=Demux_lane2
+
+
+
+########You can concatenate both lanes before demultiplexing and use that as a single fastq for R1 and R2. Like this:
+
+cat index_9_S1_L001_R1_001.fastq.gz index_9_S1_L002_R1_001.fastq.gz > index_9_S1_R1.fastq.gz
+
+cat index_9_S1_L001_R2_001.fastq.gz index_9_S1_L002_R2_001.fastq.gz > index_9_S1_R2.fastq.gz
+
+
+
+####Use AdapaterRemoval to demultiplex ONLY
+ml Singularity
+singularity exec -B /gpfs/ /hpcfs/groups/acad_users/shyrav/resources/singularity/nf-core-eager_2.4.5-sharding.sif \
+AdapterRemoval \
+--barcode-list ../Cloggs_barcodes \
+--adapter1 AGATCGGAAGAGCACACGTCTGAACTCCAGTCACNNNNNNATCTCGTATGCCGTCTTCTGCTTG \
+ --adapter2 AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT \
+ --file1 ./CloggsCaptures_S2_L003_R1_001.fastq.gz \
+ --file2 ./CloggsCaptures_S2_L003_R2_001.fastq.gz \
+ --basename Cloggs2_ \
+ --barcode-mm-r1 1 \
+ --barcode-mm-r2 1 \
+ --threads 20 \
+ --demultiplex-only \
+ --gzip
+
+singularity exec -B /gpfs/ /hpcfs/groups/acad_users/shyrav/resources/singularity/nf-core-eager_2.4.5-sharding.sif \
+AdapterRemoval \
+--barcode-list ../Cloggs_barcodes \
+--adapter1 AGATCGGAAGAGCACACGTCTGAACTCCAGTCACNNNNNNATCTCGTATGCCGTCTTCTGCTTG \
+ --adapter2 AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT \
+ --file1 ./CloggsCaptures_S4_L003_R1_001.fastq.gz \
+ --file2 ./CloggsCaptures_S4_L003_R2_001.fastq.gz \
+ --basename Cloggs4_ \
+ --barcode-mm-r1 1 \
+ --barcode-mm-r2 1 \
+ --threads 20 \
+ --demultiplex-only \
+ --gzip
+
+singularity exec -B /gpfs/ /hpcfs/groups/acad_users/shyrav/resources/singularity/nf-core-eager_2.4.5-sharding.sif \
+AdapterRemoval \
+--barcode-list ../Cloggs_barcodes \
+--adapter1 AGATCGGAAGAGCACACGTCTGAACTCCAGTCACNNNNNNATCTCGTATGCCGTCTTCTGCTTG \
+ --adapter2 AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT \
+ --file1 ./CloggsCaptures_S3_L003_R1_001.fastq.gz \
+ --file2 ./CloggsCaptures_S3_L003_R2_001.fastq.gz \
+ --basename Cloggs3_ \
+ --barcode-mm-r1 1 \
+ --barcode-mm-r2 1 \
+ --threads 20 \
+ --demultiplex-only \
+ --gzip
