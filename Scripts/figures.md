@@ -127,4 +127,131 @@ ggsave("/Users/dawnlewis/Library/CloudStorage/Box-Box/Writing/4. Widgingarri/wat
 
 ```
 
-Figure X
+# Figure S1 and Figure S2
+```
+library(ggplot2)
+library(tidyr)
+library(dplyr)
+
+freq <- read.table(
+  "/Users/dawnlewis/Library/CloudStorage/Box-Box/Widgingarri/2025/R_stuff/mqc_fastp-insert-size-plot_1.txt",
+  header = FALSE,
+  sep = "\t",
+  skipNul = TRUE,
+  fill = TRUE,
+  stringsAsFactors = TRUE
+)
+
+results <- data.frame(
+  Library = character(),
+  Mode = numeric(),
+  Mean = numeric(),
+  stringsAsFactors = FALSE
+)
+
+for (i in 2:nrow(freq)) {  # start at 2 because we need the row above
+  
+  if (!is.na(freq[i, 1]) && freq[i, 1] != "") {
+    
+    # Frequencies (current row)
+    freqs <- as.numeric(freq[i, -1])
+    
+    # Insert sizes (row above)
+    sizes <- as.numeric(as.character(freq[i - 1, -1]))
+    
+    # Mode
+    max_col <- which.max(freqs)
+    mode_value <- sizes[max_col]
+    
+    # Mean
+    mean_value <- sum(sizes * freqs, na.rm = TRUE) / sum(freqs, na.rm = TRUE)
+    
+    results <- rbind(
+      results,
+      data.frame(
+        Library = as.character(freq[i, 1]),
+        Mode = mode_value,
+        Mean = mean_value,
+        stringsAsFactors = FALSE
+      )
+    )
+  }
+}
+
+# Join metadata 
+results <- results %>%
+  mutate(Library = paste0(Library)) %>%
+  left_join(metadata %>% select(Library, Depth_m, Bone), by = "Library") %>%
+  mutate(
+    Depth_m = as.numeric(as.character(Depth_m)),
+    Bone = as.character(Bone),
+    bar_color = dplyr::case_when(
+  Bone == "Yes" ~ "pink",
+  Bone == "Associated" ~ "orange",
+  TRUE ~ "grey70"
+  )
+)
+# Make Depth a factor so dodging works
+results <- results %>%
+  mutate(
+    Depth_m = factor(Depth_m, levels = sort(unique(Depth_m), decreasing = FALSE))
+  )
+# Order by depth
+results <- results %>%
+  arrange(Depth_m) %>%   # order rows
+  mutate(
+    Depth_m = factor(Depth_m, levels = unique(Depth_m))
+  )
+
+# Mean plot
+ggplot(results, aes(y = Depth_m, x = Mean, fill = bar_color)) +
+   geom_col(
+    position = position_dodge(width = 0.8),
+    orientation = "y",
+    width = 0.8,                 # Bar width
+    colour = "grey30",           # Bar outline
+    linewidth = 0.2
+  ) +
+  scale_y_discrete(limits = rev(levels(results$Depth_m))) +
+  scale_fill_identity() +
+  labs(
+    title = "Mean fragmentation by depth",
+    x = "Mean length (bp)",
+    y = "Depth (m)"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text = element_text(size = 30),
+    axis.title = element_text(size = 36, face = "bold"),
+    plot.title = element_text(size = 36, face = "bold", hjust = 0.5)
+  )
+
+ggsave("mean_fragmentation.png", width = 25, height = 15, dpi = 300)
+
+# Mode plot
+
+ggplot(results, aes(y = Depth_m, x = Mode, fill = bar_color)) +
+   geom_col(
+    position = position_dodge(width = 0.8),
+    orientation = "y",
+    width = 0.8,                 # Bar width
+    colour = "grey30",           # Bar outline
+    linewidth = 0.2
+  ) +
+  scale_y_discrete(limits = rev(levels(results$Depth_m))) +
+  scale_fill_identity() +
+  labs(
+    title = "Modal fragmentation by depth",
+    x = "Modal length (bp)",
+    y = "Depth (m)"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text = element_text(size = 30),
+    axis.title = element_text(size = 36, face = "bold"),
+    plot.title = element_text(size = 36, face = "bold", hjust = 0.5)
+  )
+
+ggsave("modal_fragmentation.png", width = 25, height = 15, dpi = 300)
+```
+
