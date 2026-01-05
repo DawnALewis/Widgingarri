@@ -1,0 +1,34 @@
+Library_95LCA	Library	TubeNum	ACAD	Type	Depth_m	Bone	pH	Water_pc	SU	CU	Period
+Seda24WidgLib_26_95LCA	Seda24WidgLib_26	eDNA_1	25322	Sample	0	No	8.8	0.5	SU5	CU3	Holocene
+Seda24WidgLib_15_95LCA	Seda24WidgLib_15	eDNA_2	25323	Sample	0.05	Associated	8.9	NA	SU5	CU3	Holocene
+Seda24WidgLib_16_95LCA	Seda24WidgLib_16	eDNA_2	25323	Sample	0.05	Yes	8.9	NA	SU5	CU3	Holocene
+Seda24WidgLib_2_95LCA	Seda24WidgLib_2	eDNA_3	25324	Sample	0.11	No	8.7	1	SU5	CU3	Holocene
+Seda24WidgLib_3_95LCA	Seda24WidgLib_3	eDNA_4	25325	Sample	0.15	Associated	8.4	0.9	SU5	CU3	Holocene
+Seda24WidgLib_4_95LCA	Seda24WidgLib_4	eDNA_4	25325	Sample	0.15	Yes	8.4	0.9	SU5	CU3	Holocene
+Seda24WidgLib_5_95LCA	Seda24WidgLib_5	eDNA_5	25326	Sample	0.18	Associated	8.3	1	SU5	CU3	Holocene
+Seda24WidgLib_6_95LCA	Seda24WidgLib_6	eDNA_5	25326	Sample	0.18	Yes	8.3	1	SU5	CU3	Holocene
+Seda24WidgLib_7_95LCA	Seda24WidgLib_7	eDNA_6	25327	Sample	0.23	Associated	8.4	1	SU5	CU3	Holocene
+Seda24WidgLib_8_95LCA	Seda24WidgLib_8	eDNA_6	25327	Sample	0.23	Yes	8.4	1	SU5	CU3	Holocene
+Seda24WidgLib_13_95LCA	Seda24WidgLib_13	eDNA_7	25328	Sample	0.3	No	8.1	1.4	SU5	CU3	Holocene
+Seda24WidgLib_11_95LCA	Seda24WidgLib_11	eDNA_8	25329	Sample	0.42	Associated	8.2	1.2	SU5	CU3	Terminal Pleistocene
+Seda24WidgLib_12_95LCA	Seda24WidgLib_12	eDNA_8	25329	Sample	0.42	Yes	8.2	1.2	SU5	CU3	Terminal Pleistocene
+Seda24WidgLib_9_95LCA	Seda24WidgLib_9	eDNA_9	25330	Sample	0.45	Associated	8.2	1.3	SU3	CU3	Terminal Pleistocene
+Seda24WidgLib_10_95LCA	Seda24WidgLib_10	eDNA_9	25330	Sample	0.45	Yes	8.2	1.3	SU3	CU3	Terminal Pleistocene
+Seda24WidgLib_25_95LCA	Seda24WidgLib_25	eDNA_10	25331	Sample	0.54	No	7.8	1.2	SU3	CU3	Terminal Pleistocene
+Seda24WidgLib_17_95LCA	Seda24WidgLib_17	eDNA_11	25332	Sample	0.6	No	7.9	1.9	SU3	CU2	Terminal Pleistocene
+Seda24WidgLib_18_95LCA	Seda24WidgLib_18	eDNA_11	25332	Sample	0.6	Yes	7.9	1.9	SU3	CU2	Terminal Pleistocene
+Seda24WidgLib_33_95LCA	Seda24WidgLib_33	eDNA_12	25333	Sample	0.66	No	7.8	2	SU3	CU2	Terminal Pleistocene
+Seda24WidgLib_27_95LCA	Seda24WidgLib_27	eDNA_13	25334	Sample	0.73	No	7.7	1.5	SU3	CU2	Terminal Pleistocene
+Seda24WidgLib_28_95LCA	Seda24WidgLib_28	eDNA_14	25335	Sample	0.77	No	7.5	1.6	SU3	CU2	Late Pleistocene
+Seda24WidgLib_14_95LCA	Seda24WidgLib_14	eDNA_15	25336	Sample	0.86	No	7.4	2	SU3	CU2	Late Pleistocene
+Seda24WidgLib_30_95LCA	Seda24WidgLib_30	eDNA_16	25337	Sample	0.91	No	7.3	1.5	SU3	CU2	Late Pleistocene
+Seda24WidgLib_31_95LCA	Seda24WidgLib_31	eDNA_17	25338	Sample	0.98	No	7.3	1.5	SU3	CU2	Late Pleistocene
+Seda24WidgLib_29_95LCA	Seda24WidgLib_29	eDNA_18	25339	Sample	1.04	No	6.7	1	SU3	CU2	Late Pleistocene
+Seda24WidgLib_22_95LCA	Seda24WidgLib_22	eDNA_19	25340	Sample	1.08	No	6.8	1	SU3	CU2	Late Pleistocene
+Seda24WidgLib_20_95LCA	Seda24WidgLib_20	eDNA_20	25341	Sample	1.19	No	5.8	1.1	SU3	CU2	Late Pleistocene
+Seda24WidgLib_24_95LCA	Seda24WidgLib_24	eDNA_21	25342	Sample	1.29	No	6.1	1.6	SU2	CU2	Late Pleistocene
+Seda24WidgLib_21_95LCA	Seda24WidgLib_21	eDNA_22	25343	Sample	1.37	No	5.8	1.5	SU2	CU2	Late Pleistocene
+Seda24WidgLib_1_95LCA	Seda24WidgLib_1	NA	EBC	EBC	NA	No	NA	NA	NA	NA	NA
+Seda24WidgLib_19_95LCA	Seda24WidgLib_19	NA	EBC	EBC	NA	No	NA	NA	NA	NA	NA
+Seda24WidgLib_23_95LCA	Seda24WidgLib_23	NA	EBC	EBC	NA	No	NA	NA	NA	NA	NA
+Seda24WidgLib_32_95LCA	Seda24WidgLib_32	NA	EBC	EBC	NA	No	NA	NA	NA	NA	NA
