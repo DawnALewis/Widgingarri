@@ -1,8 +1,7 @@
 
-### Figure 3
+### Figure 3.8
 ```
-{r}
-setwd("~/Library/CloudStorage/Box-Box/Widgingarri/2025/R_stuff")
+{etwd("~/Library/CloudStorage/Box-Box/Widgingarri/2025/R_stuff")
 
 library(ggplot2)
 library(dplyr)
@@ -35,9 +34,17 @@ data_variables <- geochem %>%
 # Sort by depth
 data_variables <- data_variables %>% arrange(Depth_m)
 
-# --- Water plot ---
+# water plot 
 p_water <- ggplot(data_variables %>% filter(Variable == "Water_pc" & !is.na(Value)),
                   aes(x = Value, y = Depth_m)) +
+  geom_smooth(
+    aes(x = Value, y = Depth_m),
+    method = "lm",
+    se = FALSE,
+    linetype = "dashed",
+    color = "blue",
+    linewidth = 0.8
+  ) +
   geom_path(color = "blue", linewidth = 0.8) +
   geom_point(color = "blue") +
   scale_y_reverse() +
@@ -53,6 +60,14 @@ p_water <- ggplot(data_variables %>% filter(Variable == "Water_pc" & !is.na(Valu
 p_ph <- ggplot(data_variables %>% filter(Variable == "pH" & !is.na(Value)),
                aes(x = Value, y = Depth_m)) +
   geom_path(color = "red", linewidth = 0.8) +
+  geom_smooth(
+    aes(x = Value, y = Depth_m),
+    method = "lm",
+    se = FALSE,
+    linetype = "dashed",
+    color = "red",
+    linewidth = 0.8
+  ) +
   geom_point(color = "red") +
   scale_y_reverse() +
   scale_x_continuous(expand = c(0, 0)) +
@@ -66,7 +81,7 @@ p_ph <- ggplot(data_variables %>% filter(Variable == "pH" & !is.na(Value)),
         axis.ticks = element_line(color = "black"),
         plot.title = element_text(hjust = 0.5))
 
-# --- Detailed sediment (geology) plot ---
+# geo plot
 detailed_cols <- c(
   "VERY.COARSE.SAND....", "COARSE.SAND....", "MEDIUM.SAND....", "FINE.SAND....", "VERY.FINE.SAND....",
   "VERY.COARSE.SILT....", "COARSE.SILT....", "MEDIUM.SILT....", "FINE.SILT....", "VERY.FINE.SILT....", "CLAY...."
@@ -79,7 +94,6 @@ detailed_data <- sediment_geol %>%
   mutate(Percent = Value / sum(Value) * 100) %>%
   ungroup()
 
-# --- Custom colors ---
 grain_colors <- c(
   "VERY.COARSE.SAND...." = "#8c6d47",
   "COARSE.SAND...." = "#a47f53",
@@ -94,18 +108,15 @@ grain_colors <- c(
   "CLAY...." = "#873e23"
 )
 
-# --- Clean legend labels ---
 detailed_data <- detailed_data %>%
   mutate(GrainType_clean = GrainType %>%
            gsub("\\.+", " ", .) %>%
            toTitleCase())
-
-# --- Match factor levels for consistent fill colors ---
 detailed_data$GrainType_clean <- factor(detailed_data$GrainType_clean,
                                         levels = toTitleCase(gsub("\\.+", " ", names(grain_colors))))
 detailed_data$GrainType <- factor(detailed_data$GrainType, levels = names(grain_colors))
 
-# --- Sediment plot ---
+# Sediment plot 
 p_geol <- ggplot(detailed_data, aes(x = Percent, y = factor(`Depth..m.`), fill = GrainType)) +
   geom_bar(stat = "identity") +
   scale_fill_manual(values = grain_colors,
@@ -118,12 +129,16 @@ p_geol <- ggplot(detailed_data, aes(x = Percent, y = factor(`Depth..m.`), fill =
         panel.grid = element_blank(),
         plot.title = element_text(hjust = 0.5))
 
-# --- Combine plots with relative widths (water & pH skinnier) ---
-geochem <- (p_water | p_ph | p_geol) + plot_layout(widths = c(0.4, 0.4, 1))
+# Combine plots (water & pH skinnier) 
+geochem <- (p_water | p_ph | p_geol) + 
+  plot_layout(widths = c(0.4, 0.4, 1)) &
+  theme(text = element_text(family = "serif"))
 
-# --- Save figure ---
+
 ggsave("/Users/dawnlewis/Library/CloudStorage/Box-Box/Writing/4. Widgingarri/waterpH_sediment.png",
        plot = geochem, width = 14, height = 6, dpi = 300)
+
+
 
 ```
 
